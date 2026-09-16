@@ -1,0 +1,43 @@
+syntax = "proto3";
+
+package proto;
+
+import "google/protobuf/empty.proto";
+
+service Alarm {
+  rpc Get(HomeRequest) returns (BoolResponse);
+  rpc Update(HomeBoolRequest) returns (google.protobuf.Empty);
+  rpc Upsert(HomeBoolRequest) returns (BoolResponse);
+  rpc GetHold(HomeRequest) returns (BoolResponse);
+  rpc SetHold(HomeBoolRequest) returns (google.protobuf.Empty);
+  rpc SetAlarmSystem(HomeBoolRequest) returns (google.protobuf.Empty);
+  rpc GetLevel(HomeRequest) returns (StringResponse);
+  rpc SetLevel(HomeStringRequest) returns (StringResponse);
+  rpc Homes(google.protobuf.Empty) returns (HomesResponse);
+}
+
+message HomeRequest {
+  string home = 1;
+}
+
+message HomesResponse {
+  repeated string homes = 1;
+}
+
+message HomeBoolRequest {
+  string home = 1;
+  bool value = 2; // reused for both armed/hold
+}
+
+message HomeStringRequest {
+  string home = 1;
+  string value = 2;
+}
+
+message BoolResponse {
+  bool value = 1; // reused for armed/hold/created
+}
+
+message StringResponse {
+  string value = 1;
+}
