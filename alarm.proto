@@ -14,6 +14,8 @@ service Alarm {
   rpc GetLevel(HomeRequest) returns (StringResponse);
   rpc SetLevel(HomeStringRequest) returns (StringResponse);
   rpc Homes(google.protobuf.Empty) returns (HomesResponse);
+  rpc GetPin(HomeRequest) returns (StringResponse);
+  rpc SetPin(HomeStringRequest) returns (google.protobuf.Empty);
 }
 
 message HomeRequest {

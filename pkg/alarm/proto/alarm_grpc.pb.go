@@ -27,6 +27,8 @@ type AlarmClient interface {
 	GetLevel(ctx context.Context, in *HomeRequest, opts ...grpc.CallOption) (*StringResponse, error)
 	SetLevel(ctx context.Context, in *HomeStringRequest, opts ...grpc.CallOption) (*StringResponse, error)
 	Homes(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*HomesResponse, error)
+	GetPin(ctx context.Context, in *HomeRequest, opts ...grpc.CallOption) (*StringResponse, error)
+	SetPin(ctx context.Context, in *HomeStringRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 }
 
 type alarmClient struct {
@@ -118,6 +120,24 @@ func (c *alarmClient) Homes(ctx context.Context, in *emptypb.Empty, opts ...grpc
 	return out, nil
 }
 
+func (c *alarmClient) GetPin(ctx context.Context, in *HomeRequest, opts ...grpc.CallOption) (*StringResponse, error) {
+	out := new(StringResponse)
+	err := c.cc.Invoke(ctx, "/proto.Alarm/GetPin", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *alarmClient) SetPin(ctx context.Context, in *HomeStringRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	out := new(emptypb.Empty)
+	err := c.cc.Invoke(ctx, "/proto.Alarm/SetPin", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // AlarmServer is the server API for Alarm service.
 // All implementations must embed UnimplementedAlarmServer
 // for forward compatibility
@@ -131,6 +151,8 @@ type AlarmServer interface {
 	GetLevel(context.Context, *HomeRequest) (*StringResponse, error)
 	SetLevel(context.Context, *HomeStringRequest) (*StringResponse, error)
 	Homes(context.Context, *emptypb.Empty) (*HomesResponse, error)
+	GetPin(context.Context, *HomeRequest) (*StringResponse, error)
+	SetPin(context.Context, *HomeStringRequest) (*emptypb.Empty, error)
 	mustEmbedUnimplementedAlarmServer()
 }
 
@@ -164,6 +186,12 @@ func (UnimplementedAlarmServer) SetLevel(context.Context, *HomeStringRequest) (*
 }
 func (UnimplementedAlarmServer) Homes(context.Context, *emptypb.Empty) (*HomesResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Homes not implemented")
+}
+func (UnimplementedAlarmServer) GetPin(context.Context, *HomeRequest) (*StringResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetPin not implemented")
+}
+func (UnimplementedAlarmServer) SetPin(context.Context, *HomeStringRequest) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SetPin not implemented")
 }
 func (UnimplementedAlarmServer) mustEmbedUnimplementedAlarmServer() {}
 
@@ -340,6 +368,42 @@ func _Alarm_Homes_Handler(srv interface{}, ctx context.Context, dec func(interfa
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Alarm_GetPin_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(HomeRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AlarmServer).GetPin(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/proto.Alarm/GetPin",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AlarmServer).GetPin(ctx, req.(*HomeRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Alarm_SetPin_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(HomeStringRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AlarmServer).SetPin(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/proto.Alarm/SetPin",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AlarmServer).SetPin(ctx, req.(*HomeStringRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _Alarm_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "proto.Alarm",
 	HandlerType: (*AlarmServer)(nil),
@@ -379,6 +443,14 @@ var _Alarm_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Homes",
 			Handler:    _Alarm_Homes_Handler,
+		},
+		{
+			MethodName: "GetPin",
+			Handler:    _Alarm_GetPin_Handler,
+		},
+		{
+			MethodName: "SetPin",
+			Handler:    _Alarm_SetPin_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
