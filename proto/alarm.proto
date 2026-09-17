@@ -1,6 +1,7 @@
 syntax = "proto3";
 
-package proto;
+package alarmpb;
+option go_package = "alarmpb";
 
 import "google/protobuf/empty.proto";
 

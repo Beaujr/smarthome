@@ -1,0 +1,105 @@
+syntax = "proto3";
+
+package store;
+
+option go_package = "storepb";
+
+import "google/protobuf/empty.proto";
+
+// Service definition
+service Store {
+  rpc GetNumberFromHome (GetNumberFromHomeRequest) returns (GetNumberFromHomeResponse);
+  rpc SetHome (SetHomeRequest) returns (google.protobuf.Empty);
+  rpc GetHome (GetHomeRequest) returns (GetHomeResponse);
+  rpc IsEmpty (IsEmptyRequest) returns (IsEmptyResponse);
+  rpc SetAutoLights (SetAutoLightsRequest) returns (google.protobuf.Empty);
+  rpc GetAutoLights (GetAutoLightsRequest) returns (GetAutoLightsResponse);
+  rpc GetCameras (GetCamerasRequest) returns (GetCamerasResponse);
+  rpc GetHomeOccupancy (GetHomeOccupancyRequest) returns (GetHomeOccupancyResponse);
+  rpc GetLastSeen(GetHomeOccupancyRequest) returns (GetLastSeenResponse);
+}
+
+// Messages
+
+message GetNumberFromHomeRequest {
+  string home = 1;
+  string source = 2;
+}
+
+message GetNumberFromHomeResponse {
+  repeated string numbers = 1;
+}
+
+message SetHomeRequest {
+  string number = 1;
+  string home = 2;
+  string source = 3;
+}
+
+message GetHomeRequest {
+  string number = 1;
+  string source = 2;
+}
+
+message GetHomeResponse {
+  string home = 1;
+}
+
+message SetPinRequest {
+  string domicile = 1;
+  string value = 2;
+}
+
+message GetPinRequest {
+  string domicile = 1;
+}
+
+message GetPinResponse {
+  string value = 1;
+}
+
+message IsEmptyRequest {
+  string home = 1;
+}
+
+message IsEmptyResponse {
+  bool is_empty = 1;
+}
+
+message SetAutoLightsRequest {
+  string home = 1;
+  bool auto = 2;
+}
+
+message GetAutoLightsRequest {
+  string home = 1;
+}
+
+message GetAutoLightsResponse {
+  bool auto = 1;
+}
+
+message GetCamerasRequest {
+  string home = 1;
+}
+
+message GetCamerasResponse {
+  repeated string cameras = 1;
+}
+
+message GetHomeOccupancyRequest {
+  string home = 1;
+}
+
+message GetHomeOccupancyResponse {
+  repeated string occupants = 1;
+}
+
+message GetLastSeenResponse {
+    repeated LastSeen response = 1;
+}
+
+message LastSeen {
+    int64 lastseen = 1;
+    string occupant = 2;
+}
