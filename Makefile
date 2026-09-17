@@ -5,7 +5,14 @@
 proto: proto-alarm proto-store
 
 proto-alarm:
-	protoc --go_out=./pkg/alarm --go-grpc_out=./pkg/alarm --go-grpc_opt=paths=source_relative alarm.proto
-
+	protoc \
+	  --proto_path=./proto \
+	  --go_out=paths=source_relative:./pkg/proto/alarm \
+	  --go-grpc_out=paths=source_relative:./pkg/proto/alarm \
+	  alarm.proto
 proto-store:
-	protoc --go_out=./pkg/store --go-grpc_out=./pkg/store --go-grpc_opt=paths=source_relative store.proto
+	protoc \
+	  --proto_path=./proto \
+	  --go_out=paths=source_relative:./pkg/proto/store \
+	  --go-grpc_out=paths=source_relative:./pkg/proto/store \
+	  store.proto
