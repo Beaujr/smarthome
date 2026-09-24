@@ -1,0 +1,125 @@
+syntax = "proto3";
+import "google/protobuf/empty.proto";
+package devicepb;
+option go_package = "devicepb";
+service DeviceDetector {
+  rpc Ack (BleRequest) returns (Reply) {}
+  rpc Address (AddressRequest) returns (Reply) {}
+  rpc Addresses (AddressesRequest) returns (Reply) {}
+  rpc ListDevices (google.protobuf.Empty) returns (DevicesResponse) {}
+  rpc UpdateDevice (Devices) returns (Reply) {}
+  rpc DeleteDevice (StringRequest) returns (Reply) {}
+  rpc ListPeople (google.protobuf.Empty) returns (PeopleResponse) {}
+  rpc TogglePerson (Devices) returns (Reply) {}
+  rpc HouseEmpty (StringRequest) returns (Reply) {}
+}
+
+message StringRequest {
+  string key = 1;
+}
+
+message BleRequest {
+  string key = 1;
+  float distance = 2;
+  string hostname = 3;
+}
+
+message ReporterAddressRequest {
+    Agent agent = 1;
+    repeated AddressRequest addresses = 2;
+    int64 timestamp = 3;
+    repeated Metadata metadata = 4;
+}
+
+message ReporterBleRequest {
+    Agent agent = 1;
+    BleRequest bles = 2;
+    repeated Metadata metadata = 3;
+}
+
+message Agent {
+    string home = 1;
+    string id = 2;
+}
+
+message Metadata {
+   string key = 1;
+   string value = 2;
+}
+
+message DevicesResponse {
+  repeated Devices devices = 1;
+}
+
+message BleDevices {
+	string Id = 1;
+	int64 LastSeen = 2;
+	repeated Commands commands = 3;
+	string Name = 4;
+	string Home = 5;
+	bool tile = 6;
+	float distance = 7;
+	repeated Metadata metadata = 8;
+	string Parent = 9;
+}
+
+message Binding {
+    string deviceMac = 1;
+    string bleMac = 2;
+}
+
+message Commands {
+	int64 Timeout  = 1;
+	string Command  = 2;
+	string Id = 3;
+}
+
+message AddressRequest {
+  string ip = 1;
+  string mac = 2;
+  float distance = 3;
+  repeated string hosts = 4;
+  string vendor = 5;
+}
+
+message AddressesRequest {
+  repeated AddressRequest addresses = 1;
+}
+
+message Reply {
+  bool acknowledged = 1;
+}
+
+message PeopleResponse {
+    repeated People people = 1;
+}
+
+message People {
+    string Name = 1;
+    repeated string ids = 2;
+    bool away = 3;
+    string home = 4;
+    int64 LastSeen = 5;
+}
+
+message Devices {
+	networkId   Id = 1;
+	string  Home = 2;
+	int64 LastSeen = 3;
+	bool Away = 4;
+	string Name = 5;
+	bool Person= 6;
+	string Command = 7;
+	bool Smart = 8;
+	string Manufacturer = 9;
+	bool PresenceAware = 10;
+	float Latency = 11;
+	repeated string Hostnames = 12;
+    repeated Metadata metadata = 13;
+}
+
+message networkId {
+	string Ip    = 1;
+	string Mac   = 2;
+	string UUID  = 3;
+}
