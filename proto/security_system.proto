@@ -1,0 +1,172 @@
+syntax = "proto3";
+import "google/protobuf/empty.proto";
+package securitypb;
+option go_package = "securitypb";
+
+service Frigate {
+  rpc DetectionEvent (ItemDetected) returns (google.protobuf.Empty);
+}
+
+message ItemDetected {
+  AfterItem after = 1;
+  string type = 2;
+}
+
+message GoogleAssistantCall {
+    string user = 1;
+    string command = 2;
+    bool converse = 3;
+}
+message FCMCall {
+  string title = 1;
+  string body = 2;
+  string image = 3;
+}
+message AfterItem {
+  string id = 1;
+  string camera = 2;
+  string label = 3;
+  bool stationary = 4;
+  int32 position_changes = 5;
+  bool has_clip = 6;
+}
+
+message FrigateCameraDetection {
+    string camera = 1;
+    string host = 4;
+    string user = 5;
+    string password = 6;
+    repeated string locations = 7;
+    string home = 8;
+    bool connect = 9;
+    bool alarm = 10;
+}
+
+message RoomControl {
+    int64 timeoutSeconds = 1;
+    bool enabled = 2;
+    string name = 3;
+    bool presence = 4;
+    OccupancyEvent autolight = 5;
+    bool smart = 6;
+    repeated int64 tradfri = 7;
+    repeated string zigbee = 8;
+    string home = 9;
+}
+
+message People {
+    string Name = 1;
+    repeated string ids = 2;
+    bool away = 3;
+    string home = 4;
+    int64 LastSeen = 5;
+}
+
+message Home {
+    string Name = 1;
+    repeated string cameras = 2;
+}
+
+message Topic {
+  string secret = 1;
+  repeated int32 bytes = 2;
+}
+
+message FcmAction {
+    string notification = 1;
+    repeated string commands    =  2;
+    string title     =   3;
+    string body     =    4;
+    OccupancyEvent schedule = 5;
+    repeated Detection detection = 6;
+}
+
+message Detection {
+    string name = 1;
+    bool privacy = 2;
+    bool alarm = 3;
+}
+
+message FCMActions {
+     string topic = 1;
+     repeated FcmAction actions = 2;
+}
+
+message FrigateAction {
+    string label = 1;
+    string camera = 2;
+}
+
+message FrigateActions {
+     string topic = 1;
+     repeated FrigateAction actions = 2;
+}
+
+message HomeActions {
+    repeated FrigateActions Frigate = 1;
+    repeated FCMActions Fcm = 2;
+    repeated FrigateCameraDetection detection = 3;
+    repeated RoomControl rooms = 4;
+    Topic topic = 5;
+    bool broadcast = 6;
+    repeated tariff tariffs = 7;
+    EnergyProvider energyprovider = 8;
+    map<string, Vallhorn> vallhorn = 9;
+    repeated string excessLightIds = 10;
+}
+
+// The request message containing the user's name.
+message TimedCommands {
+  string id = 1;
+  int64 executeat = 2;
+  string owner = 3;
+  string command = 4;
+  bool executed = 5;
+}
+
+message tariff {
+    repeated chargePeriod periods = 1;
+    string Provider = 2;
+    string Tariff = 3;
+    float ConnectionCharge = 4;
+}
+
+message chargePeriod {
+    repeated int64 Hours = 1;
+    float Charge = 2;
+}
+
+message networkId {
+	string Ip    = 1;
+	string Mac   = 2;
+	string UUID  = 3;
+}
+
+message EnergyProvider {
+	string Account    = 1;
+	string ApiKey   = 2;
+	string MPAN  = 3;
+	string METERID  = 4;
+}
+message HouseStatusRequest {
+    string home = 1;
+    bool empty = 2;
+}
+
+message Vallhorn {
+    string Location = 1;
+    repeated string Rooms = 2;
+    string Name = 3;
+}
+
+
+enum OccupancyEvent {
+    	Always               = 0;
+    	WhenEmpty            = 1;
+    	WhenOccupied         = 2;
+    	WhenDarkAndEmpty     = 3;
+    	WhenDarkAndOccupied  = 4;
+    	WhenDark             = 5;
+    	WhenDarkAndAsleep    = 6;
+    	Never = 99;
+}

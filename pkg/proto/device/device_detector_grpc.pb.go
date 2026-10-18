@@ -18,7 +18,6 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type DeviceDetectorClient interface {
-	// Sends a greeting
 	Ack(ctx context.Context, in *BleRequest, opts ...grpc.CallOption) (*Reply, error)
 	Address(ctx context.Context, in *AddressRequest, opts ...grpc.CallOption) (*Reply, error)
 	Addresses(ctx context.Context, in *AddressesRequest, opts ...grpc.CallOption) (*Reply, error)
@@ -123,7 +122,6 @@ func (c *deviceDetectorClient) HouseEmpty(ctx context.Context, in *StringRequest
 // All implementations must embed UnimplementedDeviceDetectorServer
 // for forward compatibility
 type DeviceDetectorServer interface {
-	// Sends a greeting
 	Ack(context.Context, *BleRequest) (*Reply, error)
 	Address(context.Context, *AddressRequest) (*Reply, error)
 	Addresses(context.Context, *AddressesRequest) (*Reply, error)

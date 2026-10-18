@@ -21,7 +21,6 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
 
-// The request message containing the user's name.
 type StringRequest struct {
 	Key                  string   `protobuf:"bytes,1,opt,name=key,proto3" json:"key,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
@@ -61,7 +60,6 @@ func (m *StringRequest) GetKey() string {
 	return ""
 }
 
-// The request message containing the user's name.
 type BleRequest struct {
 	Key                  string   `protobuf:"bytes,1,opt,name=key,proto3" json:"key,omitempty"`
 	Distance             float32  `protobuf:"fixed32,2,opt,name=distance,proto3" json:"distance,omitempty"`
@@ -573,7 +571,6 @@ func (m *Commands) GetId() string {
 	return ""
 }
 
-// The request message containing the user's name.
 type AddressRequest struct {
 	Ip                   string   `protobuf:"bytes,1,opt,name=ip,proto3" json:"ip,omitempty"`
 	Mac                  string   `protobuf:"bytes,2,opt,name=mac,proto3" json:"mac,omitempty"`
@@ -684,7 +681,6 @@ func (m *AddressesRequest) GetAddresses() []*AddressRequest {
 	return nil
 }
 
-// The response message containing the greetings
 type Reply struct {
 	Acknowledged         bool     `protobuf:"varint,1,opt,name=acknowledged,proto3" json:"acknowledged,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`

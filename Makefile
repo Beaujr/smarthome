@@ -23,3 +23,10 @@ proto-device_detector:
 	  --go_out=paths=source_relative:./pkg/proto/device \
 	  --go-grpc_out=paths=source_relative:./pkg/proto/device \
 	  device_detector.proto
+
+proto-security_system:
+	protoc \
+	  --proto_path=./proto \
+	  --go_out=paths=source_relative:./pkg/proto/security \
+	  --go-grpc_out=paths=source_relative:./pkg/proto/security \
+	  security_system.proto
