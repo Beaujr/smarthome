@@ -40,6 +40,7 @@ message FrigateCameraDetection {
     string home = 8;
     bool connect = 9;
     bool alarm = 10;
+    bool alert = 11;
 }
 
 message RoomControl {
