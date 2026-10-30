@@ -51,8 +51,21 @@ message RoomControl {
     OccupancyEvent autolight = 5;
     bool smart = 6;
     repeated int64 tradfri = 7;
-    repeated string zigbee = 8;
+    repeated Zigbee zigbee = 8;
     string home = 9;
+}
+
+message Zigbee {
+  string Id = 1;
+  string OnCommand = 2;
+  bool TimerSupported = 3;
+  string Effects = 4;
+  Color Color = 5;
+}
+
+message Color {
+  float x = 1;
+  float y = 2;
 }
 
 message People {
