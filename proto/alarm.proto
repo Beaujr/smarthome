@@ -1,7 +1,7 @@
 syntax = "proto3";
 
 package alarmpb;
-option go_package = "alarmpb";
+option go_package = "github.com/beaujr/smarthome/pkg/proto/alarm;alarmpb";
 
 import "google/protobuf/empty.proto";
 

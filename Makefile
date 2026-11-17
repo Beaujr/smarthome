@@ -2,7 +2,7 @@
 .PHONY: proto
 
 
-proto: proto-alarm proto-store proto-device_detector
+proto: proto-alarm proto-store proto-device_detector proto-security_system
 
 proto-alarm:
 	protoc \

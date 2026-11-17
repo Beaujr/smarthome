@@ -1,8 +1,7 @@
 syntax = "proto3";
 
 package store;
-
-option go_package = "storepb";
+option go_package = "github.com/beaujr/smarthome/pkg/proto/store;storepb";
 
 import "google/protobuf/empty.proto";
 
